@@ -1,0 +1,72 @@
+<div class="filter-container">
+  <input 
+    type="text" 
+    class="input-field" 
+    placeholder="Search by name" 
+    [(ngModel)]="searchText" 
+    (input)="applyFilters()" 
+  />
+
+  <input 
+    type="text" 
+    class="input-field" 
+    placeholder="Filter by job title" 
+    [(ngModel)]="filterJobTitle" 
+    (input)="applyFilters()" 
+  />
+
+  <button (click)="clearFilters()" class="clear-button">Clear Filters</button>
+</div>
+
+<table *ngIf="displayedEmployees && displayedEmployees.length > 0">
+  <thead>
+    <tr>
+      <th>ID
+        <span class="sort-buttons">
+          <button (click)="setSortField('id', 'asc')">▲</button>
+          <button (click)="setSortField('id', 'desc')">▼</button>
+        </span>
+      </th>
+      <th>First Name
+        <span class="sort-buttons">
+          <button (click)="setSortField('firstName', 'asc')">▲</button>
+          <button (click)="setSortField('firstName', 'desc')">▼</button>
+        </span>
+      </th>
+      <th>Last Name
+        <span class="sort-buttons">
+          <button (click)="setSortField('lastName', 'asc')">▲</button>
+          <button (click)="setSortField('lastName', 'desc')">▼</button>
+        </span>
+      </th>
+      <th>Date of Birth
+        <span class="sort-buttons">
+          <button (click)="setSortField('dateOfBirth', 'asc')">▲</button>
+          <button (click)="setSortField('dateOfBirth', 'desc')">▼</button>
+        </span>
+      </th>
+      <th>Job Title
+        <span class="sort-buttons">
+          <button (click)="setSortField('jobTitle', 'asc')">▲</button>
+          <button (click)="setSortField('jobTitle', 'desc')">▼</button>
+        </span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let employee of displayedEmployees">
+      <td>{{ employee.id }}</td>
+      <td>{{ employee.firstName }}</td>
+      <td>{{ employee.lastName }}</td>
+      <td>{{ employee.dateOfBirth | date: 'yyyy-MM-dd' }}</td>
+      <td>{{ employee.jobTitle }}</td>
+    </tr>
+  </tbody>
+</table>
+<p *ngIf="!displayedEmployees || displayedEmployees.length === 0">No employees available.</p>
+
+<div class="pagination-controls" *ngIf="totalPages > 1">
+  <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+  <span>Page {{ currentPage }} of {{ totalPages }}</span>
+  <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+</div>

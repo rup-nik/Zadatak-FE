@@ -1,0 +1,54 @@
+<div class="form-container">
+  <h1>Employee Form</h1>
+  <form [formGroup]="employeeForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="firstName">First Name:</label>
+      <input id="firstName" formControlName="firstName">
+      <div *ngIf="showErrors && employeeForm.get('firstName')?.invalid">
+        <small *ngIf="employeeForm.get('firstName')?.errors?.['required']" class="error-message">
+          First Name is required
+        </small>
+      </div>
+    </div>
+
+    <div>
+      <label for="lastName">Last Name:</label>
+      <input id="lastName" formControlName="lastName">
+      <div *ngIf="showErrors && employeeForm.get('lastName')?.invalid">
+        <small *ngIf="employeeForm.get('lastName')?.errors?.['required']" class="error-message">
+          Last Name is required
+        </small>
+      </div>
+    </div>
+
+    <div>
+      <label for="dateOfBirth">Date of Birth:</label>
+      <input 
+        id="dateOfBirth" 
+        type="date" 
+        formControlName="dateOfBirth"
+        [attr.min]="minDate" 
+        [attr.max]="maxDate">
+      <div *ngIf="showErrors && employeeForm.get('dateOfBirth')?.invalid">
+        <small *ngIf="employeeForm.get('dateOfBirth')?.errors?.['required']" class="error-message">
+          Date of Birth is required
+        </small>
+        <small *ngIf="employeeForm.get('dateOfBirth')?.errors?.['dateRange']" class="error-message">
+          Date is not valid. It must be between {{ minDate }} and {{ maxDate }}.
+        </small>
+      </div>
+    </div>
+
+    <div>
+      <label for="jobTitle">Job Title:</label>
+      <input id="jobTitle" formControlName="jobTitle">
+      <div *ngIf="showErrors && employeeForm.get('jobTitle')?.invalid">
+        <small *ngIf="employeeForm.get('jobTitle')?.errors?.['required']" class="error-message">
+          Job Title is required
+        </small>
+      </div>
+    </div>
+
+    <button type="submit">Save</button> 
+  </form>
+</div>
